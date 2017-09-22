@@ -1,62 +1,47 @@
-float startX, 
-  startY = 300, 
+import processing.sound.*;
+
+PImage trumpetImg;
+SoundFile file;
+
+int startX = 479, 
+  startY = 325, 
   endX, 
   endY;
 
-int rad = 50;
-float xpos, ypos;
-float xspeed = 5.6;
-float yspeed = 4.5;
-int xdir = 1;
-int ydir = 1;
-int ballHit = 0;
-
 void setup() {
-  size(600, 600);
-  background(100);
-  strokeWeight(3);
+  background(0);
   noCursor();
+  strokeWeight(10);
+  size(600, 600);
   frameRate(60);
-  ellipseMode(RADIUS);
-  xpos = width/2;
-  ypos = height/2;
-}
-
-void ballRandom() {
-  xpos += ( xspeed * xdir );
-  ypos += ( yspeed * ydir );
-  
-  if (xpos > width - rad || xpos < rad) {
-    xdir *= -1;
-  }
-  
-  if (ypos > height - rad || ypos < rad) {
-    ydir *= -1;
-  }
-  fill(255);
-  fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
-  ellipse(xpos, ypos, rad, rad);
+  String url = "http://sweetclipart.com/multisite/sweetclipart/files/trumpet.png";
+  trumpetImg = loadImage(url, "png");
+  file = new SoundFile(this, "Synth.mp3");
+  file.amp(.5);
+  file.play();
 }
 
 void draw() {
-  delay(50);
-  background(100);
   stroke((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
-  while (endX < 601) {
-    endX = startX + (int)((Math.random()*10));
-    endY = startY + (int)((Math.random()*20) - 9);
-    line(startX, startY, endX, endY);
-    startX = endX;
-    startY = endY;
-  }
-  fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
-  ellipse(mouseX, mouseY, 50, 50);
-  ballRandom();
+  thing();
+  image(trumpetImg, 479, 300, 121, 50);
+}
+
+void thing() {
+  endX = startX - (int)(Math.random()*10) - 2;
+  endY = startY - (int)(Math.random()*20) + 10;
+  strokeWeight(5);
+  point(startX, startY);
+  strokeWeight(2);
+  line(startX-2, startY, startX-2, startY-10);
+  startX = endX;
+  startY = endY;
 }
 
 void mousePressed() {
-  startX = mouseX;
-  startY = mouseY;
-  endX = xpos;
-  endY = ypos;
+  background(0);
+  startX = 479;
+  startY = 325;
+  endX = 0;
+  endY = 0;
 }
