@@ -1,30 +1,47 @@
-Mover m;
+Bacteria[] steve;
 
 void setup() {
-  size(600, 600);
-  m = new Mover(300, 300);
-  noStroke();
-  frameRate(30);
+    size(500, 500);
+    background(0);
+    noStroke();
+    steve = new Bacteria[10];
+    for(int i = 0; i < steve.length; i++) {
+        steve[i] = new Bacteria((int)(Math.random()*501), (int)(Math.random()*501));
+    }
 }
 
 void draw() {
-  background(0);
-  fill(50, 255, 0);
-  m.show();
-  m.move();
+    background(0);
+    for(int i = 0; i < steve.length; i++) {
+        steve[i].show();
+        steve[i].move();
+    }
 }
 
-class Mover {
-  int x, y;
-  Mover(int _x, int _y) {
-    x = _x;
-    y = _y;
-  }
-  void move() {
-    x += (int)(Math.random()*11) - 5;
-    y += (int)(Math.random()*11) - 5;
-  }
-  void show() {
-    ellipse(x, y, 50, 50);
-  }
+
+class Bacteria {
+    int x, y;
+    
+    Bacteria(int _x, int _y) {
+        x = _x;
+        y = _y;    
+    }
+    
+    void show() {
+        fill((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256))
+        ellipse(x, y, 25, 25);
+    }
+    
+    void move() {
+        if(mouseX > x) {
+            x += (int)(Math.random()*10) - 3;
+        } else {
+            x += (int)(Math.random()*10) - 6;               
+        }
+        if (mouseY > y) {
+            y += (int)(Math.random()*10) - 3;
+        } else {
+            y += (int)(Math.random()*10) - 6;
+        }
+    }
 }
